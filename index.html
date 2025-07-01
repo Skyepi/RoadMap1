@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Road Map Interactive Journey</title>
+  <style>
+    .snap-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+    .snap-item {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      width: 200px;
+      position: relative;
+    }
+    .snap-item img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+    .detail-card {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.9);
+      border-top: 1px solid #ccc;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+    .snap-item.active .detail-card {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <section class="container my-5 area">
+    <div class="snap-carousel">
+      <div class="snap-item" data-detail="Details about Item 1">
+        <img src="s-p_helpRM1.svg" alt="Item 1">
+        <div class="detail-card">Details about Item 1</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 2">
+        <img src="s-p_CastRM2.svg" alt="Item 2">
+        <div class="detail-card">Details about Item 2</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 3">
+        <img src="s-p_linksitesRM3.svg" alt="Item 3">
+        <div class="detail-card">Details about Item 3</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 4">
+        <img src="s-p_LinkBookRM4.svg" alt="Item 4">
+        <div class="detail-card">Details about Item 4</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 5">
+        <img src="s-p_ConnectRM5.svg" alt="Item 5">
+        <div class="detail-card">Details about Item 5</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 6">
+        <img src="s-p_EarthNewsRM13.svg" alt="Item 6">
+        <div class="detail-card">Details about Item 6</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 7">
+        <img src="15.svg" alt="Item 7">
+        <div class="detail-card">Details about Item 7</div>
+      </div>
+      <div class="snap-item" data-detail="Details about Item 8">
+        <img src="27.svg" alt="Item 8">
+        <div class="detail-card">Details about Item 8</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.snap-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+      // swipe detection for mobile (basic)
+      let startY = 0;
+      item.addEventListener('touchstart', e => {
+        startY = e.touches[0].clientY;
+      });
+      item.addEventListener('touchend', e => {
+        let endY = e.changedTouches[0].clientY;
+        if (startY - endY > 30) { // swipe up
+          item.classList.add('active');
+        } else if (endY - startY > 30) { // swipe down
+          item.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
